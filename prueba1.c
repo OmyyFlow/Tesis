@@ -1,10 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-// Prototipos
 int leer_instancia(const char* nombre_archivo, int* n, int* m, int* C, int** p);
 int FFD(int p[], int n, int c);
 int FirstFit(int p[], int n, int c);
+int LPT(int p[], int n, int m);
+void min_C_m(int C_m[]);
 void mergesort(int a[], int l, int r);
 void merge(int a[], int l, int mid, int r);
 
@@ -13,18 +14,17 @@ int main() {
     int* p;
 
     if (leer_instancia("Instancia.txt", &n, &m, &C, &p) != 0) {
-        return 1; // error al leer
+        return 1; //error al leer
     }
 
     printf("\n******Cantidad de bins usados en la instancia: [%d]*****", FFD(p, n, C));
-
-    free(p); // liberar memoria dinámica
+    printf("\n******Makespan para la instancia: [%d]*****", LPT(p, n, m));
+    free(p); 
     return 0;
 }
 
-// =================== FUNCIONES ===================
 
-// Lee datos desde archivo y los guarda en n, m, C y p
+// se leen datos desde un archivo y los guarda en n, m, C y p
 int leer_instancia(const char* nombre_archivo, int* n, int* m, int* C, int** p) {
     FILE* archivo = fopen(nombre_archivo, "r");
     if (!archivo) {
@@ -89,6 +89,41 @@ int FirstFit(int p[], int n, int c) {
     return cant_bins;
 }
 
+int LPT(int p[], int n, int m){
+    //mergesort(p, 0, n - 1);
+
+    int C_m[m]; //Tiempo de completés de cada máquina
+    int i;
+    //Asignar primeros m trabajos a las m maquinas
+    for (i = 0; i < m; i++) {
+        C_m[m-i-1] = p[i];
+        //printf("Trabajo %d con p=%d asignado a la maquina %d\n", i + 1, p[i], m-i );
+    }
+
+    //asignar siguientes trabajos 
+    for (i = m; i < n; i++) {
+        //printf("Asignar trabajo [%d] con p=[%d] a la máquina con carga: [%d]\n", i + 1, p[i], C_m[0]);
+        C_m[0] += p[i];
+        //printf("%d \n",C_m[0], m);
+        min_C_m(C_m);
+        //printf("Actualizando cargas:\n");
+        //printf("\n\n");
+    }
+
+    return C_m[m-1];
+}
+
+void min_C_m(int C_m[]) {
+    int C = C_m[0];
+
+    int i = 1;
+    while (C > C_m[i]) {
+        C_m[i - 1] = C_m[i];
+        i++;
+    }
+    C_m[i - 1] = C;
+}
+
 // MergeSort descendente
 void mergesort(int a[], int l, int r) {
     if (l < r) {
@@ -120,3 +155,4 @@ void merge(int a[], int l, int mid, int r) {
         a[i] = temp[i - l];
     }
 }
+
