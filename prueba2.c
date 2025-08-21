@@ -28,9 +28,18 @@ int main() {
             fprintf(stderr, "Error al leer %s\n", nombre_archivo);
             continue; // pasa al siguiente archivo
         }
-
-        printf("Cantidad de bins usados en la instancia: [%d]\n", FFD(p, n, C));
-        printf("Makespan para la instancia: [%d]\n", LPT(p, n, m));
+        if(C != -1){
+            printf("\nCantidad de bins usados en la instancia: [%d]\n", FFD(p, n, C));
+        }else{
+            printf("\nLa instancia no puede ser procesada con FFD");
+        }
+        
+        if(m != -1){
+            printf("\nMakespan para la instancia: [%d]\n", LPT(p, n, m));
+        }else{
+            printf("\nLa instancia no puede ser procesada con LPT");
+        }
+        
 
         free(p);
     }
