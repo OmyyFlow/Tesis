@@ -1,1 +1,3 @@
 Instancias/Instancia.txt
+Instancias/Instancia2.txt
+Instancias/Instancia3.txt
