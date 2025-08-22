@@ -30,13 +30,26 @@ int main() {
         }
         mergesort(p, 0, n - 1);//Order the p's
         if(C != -1){
-            printf("\nCantidad de bins usados en la instancia: [%d]\n", FFD(p, n, C));
+            //printf("\nCantidad de bins usados en la instancia: [%d]\n ", FFD(p, n, C));
+            int FFD_result = FFD(p, n, C);
+            if(FFD_result <= m){
+                printf("\nParticion factible para la instancia con FFD");
+            }else{
+                printf("\nParticion NO factible para la instancia con FFD");
+            }
+
         }else{
             printf("\nLa instancia no puede ser procesada con FFD");
         }
         
         if(m != -1){
-            printf("\nMakespan para la instancia: [%d]\n", LPT(p, n, m));
+            //printf("\nMakespan para la instancia: [%d]\n", LPT(p, n, m));
+            int LPT_result = LPT(p,n,m);
+            if(LPT_result <= C){
+                printf("\nParticion factible para la instancia con LPT");
+            }else{
+                printf("\nParticion NO factible para la instancia con LPT");
+            }
         }else{
             printf("\nLa instancia no puede ser procesada con LPT");
         }
@@ -78,7 +91,7 @@ int leer_instancia(const char* nombre_archivo, int* n, int* m, int* C, int** p) 
             fclose(archivo);
             return 4;
         }
-        printf("\n\t\t\tp[%d]: %d", i, (*p)[i]);
+        //printf("\n\t\t\tp[%d]: %d", i, (*p)[i]);
     }
 
     fclose(archivo);
