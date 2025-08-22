@@ -28,6 +28,7 @@ int main() {
             fprintf(stderr, "Error al leer %s\n", nombre_archivo);
             continue; // pasa al siguiente archivo
         }
+        mergesort(p, 0, n - 1);//Order the p's
         if(C != -1){
             printf("\nCantidad de bins usados en la instancia: [%d]\n", FFD(p, n, C));
         }else{
@@ -39,8 +40,9 @@ int main() {
         }else{
             printf("\nLa instancia no puede ser procesada con LPT");
         }
-        
-
+        n=-1;
+        m=-1;
+        C=-1;
         free(p);
     }
 
@@ -85,7 +87,7 @@ int leer_instancia(const char* nombre_archivo, int* n, int* m, int* C, int** p) 
 
 // First Fit Decreasing
 int FFD(int p[], int n, int c) {
-    mergesort(p, 0, n - 1);
+    //mergesort(p, 0, n - 1);
     return FirstFit(p, n, c);
 }
 
