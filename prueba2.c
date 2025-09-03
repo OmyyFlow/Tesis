@@ -29,11 +29,13 @@ int main() {
             continue; // pasa al siguiente archivo
         }
         mergesort(p, 0, n - 1);//Order the p's
+        int is_factible = 0;
         if(C != -1){
             //printf("\nCantidad de bins usados en la instancia: [%d]\n ", FFD(p, n, C));
             int FFD_result = FFD(p, n, C);
             if(FFD_result <= m){
                 printf("\nParticion factible para la instancia con FFD");
+                is_factible++;
             }else{
                 printf("\nParticion NO factible para la instancia con FFD");
             }
@@ -47,6 +49,7 @@ int main() {
             int LPT_result = LPT(p,n,m);
             if(LPT_result <= C){
                 printf("\nParticion factible para la instancia con LPT");
+                is_factible++;
             }else{
                 printf("\nParticion NO factible para la instancia con LPT");
             }
@@ -57,6 +60,11 @@ int main() {
         m=-1;
         C=-1;
         free(p);
+        printf("\n");
+        if (is_factible == 0) {
+            printf("\nNo se puede construir una solucion factible para La instancia [%s]", nombre_archivo);
+
+        }
     }
 
     fclose(lista);
